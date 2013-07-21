@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <title>[%= title %]</title>
-    <link rel="stylesheet/less" type="text/css" href="/static/app.less" />
+    <link rel="stylesheet/less" type="text/css" href="/static/app.less">
     <script type="text/javascript" src="/static/less.js"></script>
     <script type="text/javascript" src="/static/jquery.js"></script>
     <script type="text/javascript" src="/static/underscore.js"></script>
@@ -14,49 +14,184 @@
     <![endif]-->
 </head>
 <body>
+    <div id="tmp">
+        <div>
+            Statistics:
+            <button type="button" class="btn" onclick="app.view.statistics.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.statistics.empty();">.empty()</button>
+        </div>
+
+        <div>
+            Nickname:
+            <button type="button" class="btn" onclick="app.view.nickname.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.nickname.empty();">.empty()</button>
+        </div>
+
+        <div>
+            Error:
+            <button type="button" class="btn" onclick="app.view.error.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.error.empty();">.empty()</button>
+        </div>
+
+        <div>
+            Games:
+            <button type="button" class="btn" onclick="app.view.games.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.games.empty();">.empty()</button>
+        </div>
+
+        <div>
+            Details:
+            <button type="button" class="btn" onclick="app.view.details.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.details.empty();">.empty()</button>
+        </div>
+
+        <div>
+            Game:
+            <button type="button" class="btn" onclick="app.view.game.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.game.empty();">.empty()</button>
+        </div>
+
+        <div>
+            End:
+            <button type="button" class="btn" onclick="app.view.end.render();">.render()</button>
+            <button type="button" class="btn" onclick="app.view.end.empty();">.empty()</button>
+        </div>
+    </div>
+
     <div id="app">
         <div id="statistics">
             <!-- This area will be filled by JavaScript -->
         </div>
-        <div id="nickname">
-            <!-- This area will be filled by JavaScript -->
-        </div>
-        <div id="games">
-            <!-- This area will be filled by JavaScript -->
-        </div>
-        <div id="details">
-            <!-- This area will be filled by JavaScript -->
-        </div>
-        <div id="game">
-            <!-- This area will be filled by JavaScript -->
-        </div>
-        <div id="end">
-            <!-- This area will be filled by JavaScript -->
+        <div id="pages">
+            <div id="error">
+                <!-- This area will be filled by JavaScript -->
+            </div>
+            <div id="nickname">
+                <!-- This area will be filled by JavaScript -->
+            </div>
+            <div id="games">
+                <!-- This area will be filled by JavaScript -->
+            </div>
+            <div id="details">
+                <!-- This area will be filled by JavaScript -->
+            </div>
+            <div id="game">
+                <!-- This area will be filled by JavaScript -->
+            </div>
+            <div id="end">
+                <!-- This area will be filled by JavaScript -->
+            </div>
         </div>
     </div>
 
     <script id="tpl-statistics" type="text/template">
-        statistics
+        <div id="statistics-data">
+            <div>
+                {{#data}}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Ties</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#loop}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{quantity}}</td>
+                        <td>{{wins}}</td>
+                        <td>{{losses}}</td>
+                        <td>{{ties}}</td>
+                    </tr>
+                    {{/loop}}
+                    </tbody>
+                </table>
+                {{/data}}
+                {{^data}}
+                <p>No statistics :(</p>
+                {{/data}}
+            </div>
+        </div>
+        <button id="statistics-toggle" title="Toggle statistics" type="button">Toggle</button>
+    </script>
+
+    <script id="tpl-error" type="text/template">
+        <ul>
+            <li>Please enter your first name.</li>
+            <li>Please enter your email address.</li>
+            <li>Your passwords do not match.</li>
+        </ul>
     </script>
 
     <script id="tpl-nickname" type="text/template">
-        nickname
+        <div class="page">
+            <label for="nickname-nickname">Nickname</label>
+            <input id="nickname-nickname" type="text" placeholder="Type your nickname…">
+        </div>
     </script>
 
     <script id="tpl-games" type="text/template">
-        games
+        <div class="page">
+            <fieldset>
+                <label for="games-choose">Choose the Game</label>
+                {{#data}}
+                <select id="games-choose" size="8">
+                    {{#loop}}
+                    <option value="{{id}}">{{title}}</option>
+                    {{/loop}}
+                </select>
+                {{/data}}
+                {{^data}}
+                <select id="games-choose" size="8" disabled>
+                    <option value="">No games :(</option>
+                </select>
+                {{/data}}
+                <div>
+                    <button id="games-connect" type="button" class="btn">Connect</button>
+                </div>
+            </fieldset>
+            <fieldset>
+                <button id="games-create" type="button" class="btn">Create</button>
+            </fieldset>
+        </div>
     </script>
 
     <script id="tpl-details" type="text/template">
-        details
+        <div class="page">
+            <fieldset>
+                <label for="details-color">Color (Black plays first)</label>
+                <select id="details-color">
+                    <option value="0">Black</option>
+                    <option value="1">White</option>
+                </select>
+
+                <label for="details-intersections">Intersections</label>
+                <input id="details-intersections" type="text" placeholder="3">
+
+                <label for="details-stones">Stones for a win</label>
+                <input id="details-stones" type="text" placeholder="3">
+
+                <div>
+                    <button id="details-create" type="button" class="btn">Create</button>
+                </div>
+            </fieldset>
+        </div>
     </script>
 
     <script id="tpl-game" type="text/template">
-        game
+        <div class="page">
+            game
+        </div>
     </script>
 
     <script id="tpl-end" type="text/template">
-        end
+        <div class="page">
+            end
+        </div>
     </script>
 
     <script type="text/javascript" src="/static/app.js"></script>

@@ -8,6 +8,7 @@ window.app = {
     el: $("#app"),
     view: {},
     init: function() {
+        app.view.statistics.init();
         app.view.statistics.render();
         app.view.nickname.render();
     }
@@ -20,10 +21,80 @@ window.app = {
 app.view.statistics = {
     el: $("#statistics"),
     template: $("#tpl-statistics").html(),
+    model: {
+        "data": {
+            loop: [
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" }
+            ]
+        }
+    },
+    model2: {
+        "data": []
+    },
+    model3: {
+        "data": {
+            loop: [
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
+                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
+                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" }
+            ]
+        }
+    },
+
+    init: function() {
+        // TODO: Слушать WebSocket и реагировать?
+    },
+
+    events: function() {
+        // Тумблер для статистики
+        $('#statistics-toggle').click(function() {
+            var clicks = $(this).data('clicks');
+            if (clicks) {
+                $('#statistics-data').css("height", "0");
+            } else {
+                $('#statistics-data').css("height", "auto");
+                $('#statistics-data').css("overflow-y", "visible");
+            }
+            $(this).data("clicks", !clicks);
+        });
+    },
+
+    render: function() {
+        $(this.el).html(Mustache.render(this.template, this.model3));
+        this.events();
+
+        return this;
+    },
+
+    empty: function() {
+        $(this.el).empty();
+    }
+};
+
+
+/**
+ * View для отрисовки сообщения об ошибке.
+ */
+app.view.error = {
+    el: $("#error"),
+    template: $("#tpl-error").html(),
     model: {},
 
     init: function() {
-        // TODO: Навесить события? "click .destroy" : empty
+        // TODO: Слушать WebSocket и реагировать?
     },
 
     render: function() {
@@ -47,7 +118,7 @@ app.view.nickname = {
     model: {},
 
     init: function() {
-        // TODO: Навесить события? "click .destroy" : empty
+        // TODO: Слушать WebSocket и реагировать?
     },
 
     render: function() {
@@ -56,6 +127,10 @@ app.view.nickname = {
         return this;
     },
 
+    send: function() {
+        // TODO:
+    },
+    
     empty: function() {
         $(this.el).empty();
     }
@@ -68,10 +143,40 @@ app.view.nickname = {
 app.view.games = {
     el: $("#games"),
     template: $("#tpl-games").html(),
-    model: {},
+    model: {
+        "data": {
+            loop: [
+                { "id": "0", title: "Lucie, 15x15, 4, black" },
+                { "id": "1", title: "Jacob, 4x4, 3, white" },
+                { "id": "2", title: "Cody, 6x6, 4, white" },
+                { "id": "3", title: "Stanley, 3x3, 3, black" }
+            ]
+        }
+    },
+    model2: {
+        "data": []
+    },
+    model3: {
+        "data": {
+            loop: [
+                { "id": "0", title: "Lucie, 15x15, 4, black" },
+                { "id": "1", title: "Jacob, 4x4, 3, white" },
+                { "id": "2", title: "Cody, 6x6, 4, white" },
+                { "id": "3", title: "Stanley, 3x3, 3, black" },
+                { "id": "4", title: "Lucie, 15x15, 4, black" },
+                { "id": "5", title: "Jacob, 4x4, 3, white" },
+                { "id": "6", title: "Cody, 6x6, 4, white" },
+                { "id": "7", title: "Stanley, 3x3, 3, black" },
+                { "id": "8", title: "Lucie, 15x15, 4, black" },
+                { "id": "9", title: "Jacob, 4x4, 3, white" },
+                { "id": "10", title: "Cody, 6x6, 4, white" },
+                { "id": "11", title: "Stanley, 3x3, 3, black" }
+            ]
+        }
+    },
 
     init: function() {
-        // TODO: Навесить события? "click .destroy" : empty
+        // TODO: Слушать WebSocket и реагировать?
     },
 
     render: function() {
@@ -95,7 +200,7 @@ app.view.details = {
     model: {},
 
     init: function() {
-        // TODO: Навесить события? "click .destroy" : empty
+        // TODO: Слушать WebSocket и реагировать?
     },
 
     render: function() {
@@ -119,7 +224,31 @@ app.view.game = {
     model: {},
 
     init: function() {
-        // TODO: Навесить события? "click .destroy" : empty
+        // TODO: Слушать WebSocket и реагировать?
+    },
+
+    render: function() {
+        $(this.el).html(Mustache.render(this.template, this.model));
+
+        return this;
+    },
+
+    empty: function() {
+        $(this.el).empty();
+    }
+};
+
+
+/**
+ * View для отрисовки экрана окончания игры.
+ */
+app.view.end = {
+    el: $("#end"),
+    template: $("#tpl-end").html(),
+    model: {},
+
+    init: function() {
+        // TODO: Слушать WebSocket и реагировать?
     },
 
     render: function() {
