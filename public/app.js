@@ -129,8 +129,9 @@ app.view.nickname = {
 
     send: function() {
         // TODO:
+        alert("send nickname data");
     },
-    
+
     empty: function() {
         $(this.el).empty();
     }
@@ -185,6 +186,11 @@ app.view.games = {
         return this;
     },
 
+    send: function() {
+        // TODO:
+        alert("send games data");
+    },
+
     empty: function() {
         $(this.el).empty();
     }
@@ -209,6 +215,11 @@ app.view.details = {
         return this;
     },
 
+    send: function() {
+        // TODO:
+        alert("send details data");
+    },
+
     empty: function() {
         $(this.el).empty();
     }
@@ -231,6 +242,11 @@ app.view.game = {
         $(this.el).html(Mustache.render(this.template, this.model));
 
         return this;
+    },
+
+    send: function() {
+        // TODO:
+        alert("send game data");
     },
 
     empty: function() {
