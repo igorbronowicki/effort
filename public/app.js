@@ -70,6 +70,13 @@ app.view.statistics = {
             }
             $(this).data("clicks", !clicks);
         });
+
+        // Статистика по клавише Esc
+        $(document).keyup(function(e) {
+            if(e.keyCode == 27) {
+                $('#statistics-toggle').click();
+            }
+        });
     },
 
     render: function() {
@@ -121,8 +128,19 @@ app.view.nickname = {
         // TODO: Слушать WebSocket и реагировать?
     },
 
+    events: function() {
+        var self = this;
+
+        $("#nickname-nickname").keyup(function(e) {
+            if(e.keyCode == 13) {
+                self.send();
+            }
+        });
+    },
+
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
+        this.events();
 
         return this;
     },
@@ -180,8 +198,13 @@ app.view.games = {
         // TODO: Слушать WebSocket и реагировать?
     },
 
+    events: function() {
+        $('#games-connect').click(this.send);
+    },
+
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
+        this.events();
 
         return this;
     },
@@ -209,8 +232,13 @@ app.view.details = {
         // TODO: Слушать WebSocket и реагировать?
     },
 
+    events: function() {
+        $('#details-create').click(this.send);
+    },
+
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
+        this.events();
 
         return this;
     },
