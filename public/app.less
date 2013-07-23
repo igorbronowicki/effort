@@ -89,6 +89,52 @@ body {
     }
   }
 
+  #game {
+    #game-field {
+      padding: 1px 0 0 1px;
+      overflow: hidden;
+      margin-bottom: 15px;
+
+      > div {
+        width: 40px;
+        height: 40px;
+        float: left;
+        border: 1px solid #76581c;
+        margin: -1px 0 0 -1px;
+
+        &:after {
+          content: '';
+          width: 100%;
+          height: 100%;
+          float: left;
+          border-radius: 50%;
+        }
+
+        &.white:after {
+          background: #ffffff;
+        }
+
+        &.black:after {
+          background: #464644;
+        }
+
+        &:hover {
+          background: #d7b56d;
+          cursor: pointer;
+        }
+
+        &,
+        &[class]:hover {
+          background: #c2a362;
+        }
+
+        &[class]:hover {
+          cursor: default;
+        }
+      }
+    }
+  }
+
   #pages {
     margin: 0 5%;
 

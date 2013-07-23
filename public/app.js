@@ -8,9 +8,10 @@ window.app = {
     el: $("#app"),
     view: {},
     init: function() {
-        app.view.statistics.init();
-        app.view.statistics.render();
-        app.view.nickname.render();
+//        app.view.statistics.init();
+//        app.view.statistics.render();
+//        app.view.nickname.render();
+        app.view.game.render();
     }
 };
 
