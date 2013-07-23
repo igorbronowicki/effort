@@ -11,7 +11,9 @@ window.app = {
 //        app.view.statistics.init();
 //        app.view.statistics.render();
 //        app.view.nickname.render();
-        app.view.game.render();
+        app.view.statistics.init();
+        app.view.statistics.render();
+        app.view.games.render();
     }
 };
 
@@ -21,7 +23,10 @@ window.app = {
  */
 app.view.statistics = {
     el: $("#statistics"),
-    template: $("#tpl-statistics").html(),
+    templates: {
+        "main": $("#tpl-statistics").html(),
+        "list": $("#tpl-statistics-data").html()
+    },
     model: {
         "data": {
             loop: [
@@ -81,8 +86,15 @@ app.view.statistics = {
     },
 
     render: function() {
-        $(this.el).html(Mustache.render(this.template, this.model3));
+        $(this.el).html(Mustache.render(this.templates["main"], {}));
+        this.renderList();
         this.events();
+
+        return this;
+    },
+
+    renderList: function() {
+        $('#statistics-data').html(Mustache.render(this.templates["list"], this.model3));
 
         return this;
     },
@@ -162,7 +174,10 @@ app.view.nickname = {
  */
 app.view.games = {
     el: $("#games"),
-    template: $("#tpl-games").html(),
+    templates: {
+        "main": $("#tpl-games").html(),
+        "list": $("#tpl-games-choose-container").html()
+    },
     model: {
         "data": {
             loop: [
@@ -204,8 +219,15 @@ app.view.games = {
     },
 
     render: function() {
-        $(this.el).html(Mustache.render(this.template, this.model));
+        $(this.el).html(Mustache.render(this.templates["main"], {}));
+        this.renderList();
         this.events();
+
+        return this;
+    },
+
+    renderList: function() {
+        $('#games-choose-container').html(Mustache.render(this.templates["list"], this.model));
 
         return this;
     },
