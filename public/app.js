@@ -261,16 +261,36 @@ app.view.details = {
 app.view.game = {
     el: $("#game"),
     template: $("#tpl-game").html(),
-    model: {},
+    model: [
+        {"x":"2", "y":"2", "type":"white"},
+        {"x":"1", "y":"1", "type":"black"},
+        {"x":"4", "y":"1", "type":"white"}
+    ],
 
     init: function() {
         // TODO: Слушать WebSocket и реагировать?
     },
 
     render: function() {
-        $(this.el).html(Mustache.render(this.template, this.model));
+        var quantity = 5; // Размер поля. Будет приходить извне.
+        var cells = [];
+        for(var i=1; i<=quantity; i++) {
+            for(var j=1; j<=quantity; j++) {
+                cells.push(i+":"+j);
+            }
+        }
+        $(this.el).html(Mustache.render(this.template, cells));
+        for(var i=0; i<this.model.length; i++) {
+            var item = this.model[i];
+            this.renderCell(item);
+        }
 
         return this;
+    },
+
+    // @data: {"x":"2", "y":"2", "type":"white"}
+    renderCell: function(data) {
+        $('[data-coordinates="'+ data.x + ":" + data.y +'"]').addClass(data.type);
     },
 
     send: function() {
