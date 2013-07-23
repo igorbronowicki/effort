@@ -8,12 +8,9 @@ window.app = {
     el: $("#app"),
     view: {},
     init: function() {
-//        app.view.statistics.init();
-//        app.view.statistics.render();
-//        app.view.nickname.render();
         app.view.statistics.init();
         app.view.statistics.render();
-        app.view.games.render();
+        app.view.nickname.render();
     }
 };
 
@@ -89,14 +86,10 @@ app.view.statistics = {
         $(this.el).html(Mustache.render(this.templates["main"], {}));
         this.renderList();
         this.events();
-
-        return this;
     },
 
     renderList: function() {
         $('#statistics-data').html(Mustache.render(this.templates["list"], this.model3));
-
-        return this;
     },
 
     empty: function() {
@@ -119,8 +112,6 @@ app.view.error = {
 
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
-
-        return this;
     },
 
     empty: function() {
@@ -144,9 +135,9 @@ app.view.nickname = {
     events: function() {
         var self = this;
 
-        $("#nickname-nickname").keyup(function(e) {
+        $("#nickname-username").keyup(function(e) {
             if(e.keyCode == 13) {
-                self.send();
+                console.log(self.serialize());
             }
         });
     },
@@ -154,13 +145,13 @@ app.view.nickname = {
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
         this.events();
-
-        return this;
     },
 
-    send: function() {
-        // TODO:
-        alert("send nickname data");
+    serialize: function() {
+        var username = $('#nickname-username').val();
+        return {
+            "username": username
+        };
     },
 
     empty: function() {
@@ -215,26 +206,28 @@ app.view.games = {
     },
 
     events: function() {
-        $('#games-connect').click(this.send);
+        var self = this;
+
+        $('#games-connect').click(function() {
+            console.log(self.serialize());
+        });
     },
 
     render: function() {
         $(this.el).html(Mustache.render(this.templates["main"], {}));
         this.renderList();
         this.events();
-
-        return this;
     },
 
     renderList: function() {
         $('#games-choose-container').html(Mustache.render(this.templates["list"], this.model));
-
-        return this;
     },
 
-    send: function() {
-        // TODO:
-        alert("send games data");
+    serialize: function() {
+        var gameID = $('#games-choose').val();
+        return {
+            "id": gameID
+        };
     },
 
     empty: function() {
@@ -256,19 +249,27 @@ app.view.details = {
     },
 
     events: function() {
-        $('#details-create').click(this.send);
+        var self = this;
+
+        $('#details-create').click(function() {
+            console.log(self.serialize());
+        });
     },
 
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
         this.events();
-
-        return this;
     },
 
-    send: function() {
-        // TODO:
-        alert("send details data");
+    serialize: function() {
+        var type = $('#details-type').val();
+        var lineup = $('#details-lineup').val();
+        var dimensions = $('#details-dimensions').val();
+        return {
+            "dimensions": dimensions,
+            "lineup": lineup,
+            "type": type
+        };
     },
 
     empty: function() {
@@ -306,18 +307,11 @@ app.view.game = {
             var item = this.model[i];
             this.renderCell(item);
         }
-
-        return this;
     },
 
     // @data: {"x":"2", "y":"2", "type":"white"}
     renderCell: function(data) {
         $('[data-coordinates="'+ data.x + ":" + data.y +'"]').addClass(data.type);
-    },
-
-    send: function() {
-        // TODO:
-        alert("send game data");
     },
 
     empty: function() {
@@ -340,8 +334,6 @@ app.view.end = {
 
     render: function() {
         $(this.el).html(Mustache.render(this.template, this.model));
-
-        return this;
     },
 
     empty: function() {

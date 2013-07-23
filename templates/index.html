@@ -25,7 +25,6 @@
             Nickname:
             <button type="button" class="btn" onclick="app.view.nickname.render();">.render()</button>
             <button type="button" class="btn" onclick="app.view.nickname.empty();">.empty()</button>
-            <button type="button" class="btn" onclick="app.view.nickname.send();">.send()</button>
         </div>
 
         <div>
@@ -38,14 +37,12 @@
             Games:
             <button type="button" class="btn" onclick="app.view.games.render();">.render()</button>
             <button type="button" class="btn" onclick="app.view.games.empty();">.empty()</button>
-            <button type="button" class="btn" onclick="app.view.games.send();">.send()</button>
         </div>
 
         <div>
             Details:
             <button type="button" class="btn" onclick="app.view.details.render();">.render()</button>
             <button type="button" class="btn" onclick="app.view.details.empty();">.empty()</button>
-            <button type="button" class="btn" onclick="app.view.details.send();">.send()</button>
         </div>
 
         <div>
@@ -134,8 +131,8 @@
 
     <script id="tpl-nickname" type="text/template">
         <div class="page">
-            <label for="nickname-nickname">Nickname</label>
-            <input id="nickname-nickname" type="text" placeholder="Type your nickname…">
+            <label for="nickname-username">Nickname</label>
+            <input id="nickname-username" type="text" placeholder="Type your nickname…">
         </div>
     </script>
 
@@ -172,17 +169,17 @@
     <script id="tpl-details" type="text/template">
         <div class="page">
             <fieldset>
-                <label for="details-color">Color (Black plays first)</label>
-                <select id="details-color">
-                    <option value="0">Black</option>
-                    <option value="1">White</option>
+                <label for="details-type">Color (Black plays first)</label>
+                <select id="details-type">
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
                 </select>
 
-                <label for="details-intersections">Intersections</label>
-                <input id="details-intersections" type="text" placeholder="3">
+                <label for="details-dimensions">Dimensions</label>
+                <input id="details-dimensions" type="text" placeholder="3">
 
-                <label for="details-stones">Stones for a win</label>
-                <input id="details-stones" type="text" placeholder="3">
+                <label for="details-lineup">Stones for a win</label>
+                <input id="details-lineup" type="text" placeholder="3">
 
                 <div>
                     <button id="details-create" type="button" class="btn">Create</button>
