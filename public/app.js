@@ -406,7 +406,7 @@ app.view.end = {
     model: {},
 
     init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+        this.render();
     },
 
     render: function() {
