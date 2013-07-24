@@ -9,8 +9,10 @@ window.app = {
     view: {},
     router: {},
     currentView: null,
+    socket: null,
 
     init: function() {
+        //this.socket = io.connect('http://localhost');
         app.view.statistics.init();
         this.router.main.init();
     },
@@ -70,10 +72,10 @@ app.view.statistics = {
         if (model != undefined) {
             this.updateModel(model);
         } else {
-            //socket.emit('запрос на статистику', "empty string");
+            //app.socket.emit('запрос на статистику', "empty string");
         }
 
-//        socket.on('свежая статистика', function (model) {
+//        app.socket.on('свежая статистика', function (model) {
 //            this.updateModel(model);
 //        });
     },
@@ -171,7 +173,7 @@ app.view.nickname = {
     init: function() {
         this.render();
 
-//        socket.on('результат попытки регистрации', function (data) {
+//        app.socket.on('результат попытки регистрации', function (data) {
 //            // code: рисую error или перехожу на след. этап
 //        });
     },
@@ -181,7 +183,7 @@ app.view.nickname = {
 
         $("#nickname-username").keyup(function(e) {
             if(e.keyCode == 13) {
-                // socket.emit('попытка регистрации', { name: 'Igor' });
+                // app.socket.emit('попытка регистрации', { name: 'Igor' });
                 console.log(self.serialize());
             }
         });
@@ -223,14 +225,14 @@ app.view.games = {
         if (model != undefined) {
             this.updateModel(model);
         } else {
-            //socket.emit('запрос на ожидающие игрока игры', "empty string");
+            //app.socket.emit('запрос на ожидающие игрока игры', "empty string");
         }
 
-//        socket.on('свежий список игр ожидающих игрока', function (model) {
+//        app.socket.on('свежий список игр ожидающих игрока', function (model) {
 //            this.updateModel(model);
 //        });
 
-//        socket.on('результат попытки подключения к игре', function (data) {
+//        app.socket.on('результат попытки подключения к игре', function (data) {
 //            // code: рисую error или перехожу на след. этап
 //        });
     },
@@ -239,7 +241,7 @@ app.view.games = {
         var self = this;
 
         $('#games-connect').click(function() {
-            // socket.emit('попытка подключится к игре', { gameID: '43', userID: "27 aka Igor" });
+            // app.socket.emit('попытка подключится к игре', { gameID: '43', userID: "27 aka Igor" });
             console.log(self.serialize());
         });
     },
@@ -296,7 +298,7 @@ app.view.details = {
     init: function() {
         this.render();
 
-//        socket.on('результат попытки создать новую игру', function (data) {
+//        app.socket.on('результат попытки создать новую игру', function (data) {
 //            // code: рисую error или перехожу на след. этап
 //        });
     },
@@ -305,7 +307,7 @@ app.view.details = {
         var self = this;
 
         $('#details-create').click(function() {
-            // socket.emit('попытка создать новую игру', { userID: '27 aka Igor' });
+            // app.socket.emit('попытка создать новую игру', { userID: '27 aka Igor' });
             console.log(self.serialize());
         });
     },
@@ -353,23 +355,23 @@ app.view.game = {
         /* =========== В отличие от всего остального, его еще предстоит распихать по своим местам. ============ */
 
 //// Запросить данные об игре.
-//        socket.emit('запрос на данные об игре', { hz: 'hz' });
+//        app.socket.emit('запрос на данные об игре', { hz: 'hz' });
 //
 //// Подписка на будущие изменения в статусе игры.
-//        socket.on('данные об игре', function (data) {
+//        app.socket.on('данные об игре', function (data) {
 //            // code: на основании этих данных я рисую поле и прочую хуйню
 //        });
 //
 //// Запрос на проверку корректности хода.
-//        socket.emit('попытка походить', { name: 'Igor' });
+//        app.socket.emit('попытка походить', { name: 'Igor' });
 //
 //// Подписка на успешную\неуспешную попытку хода.
-//        socket.on('результат попытки походить', function (data) {
+//        app.socket.on('результат попытки походить', function (data) {
 //            // code: рисую error или делаю ход (отрисовую ход)
 //        });
 //
 //// Подписка на интересные факты (вход второго игрока, конец, чей ход) об игре. Статус игры.
-//        socket.on('статус игры', function (data) {
+//        app.socket.on('статус игры', function (data) {
 //            // code: рисую сообщение (как error)
 //        });
 
