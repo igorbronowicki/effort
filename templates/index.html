@@ -14,50 +14,6 @@
     <![endif]-->
 </head>
 <body>
-    <div id="tmp">
-        <div>
-            Statistics:
-            <button type="button" class="btn" onclick="app.view.statistics.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.statistics.empty();">.empty()</button>
-        </div>
-
-        <div>
-            Nickname:
-            <button type="button" class="btn" onclick="app.view.nickname.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.nickname.empty();">.empty()</button>
-        </div>
-
-        <div>
-            Error:
-            <button type="button" class="btn" onclick="app.view.error.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.error.empty();">.empty()</button>
-        </div>
-
-        <div>
-            Games:
-            <button type="button" class="btn" onclick="app.view.games.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.games.empty();">.empty()</button>
-        </div>
-
-        <div>
-            Details:
-            <button type="button" class="btn" onclick="app.view.details.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.details.empty();">.empty()</button>
-        </div>
-
-        <div>
-            Game:
-            <button type="button" class="btn" onclick="app.view.game.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.game.empty();">.empty()</button>
-        </div>
-
-        <div>
-            End:
-            <button type="button" class="btn" onclick="app.view.end.render();">.render()</button>
-            <button type="button" class="btn" onclick="app.view.end.empty();">.empty()</button>
-        </div>
-    </div>
-
     <div id="app">
         <div id="statistics">
             <!-- This area will be filled by JavaScript -->
@@ -123,9 +79,9 @@
 
     <script id="tpl-error" type="text/template">
         <ul>
-            <li>Please enter your first name.</li>
-            <li>Please enter your email address.</li>
-            <li>Your passwords do not match.</li>
+            {{#.}}
+            <li>{{.}}</li>
+            {{/.}}
         </ul>
     </script>
 
@@ -208,5 +164,69 @@
     </script>
 
     <script type="text/javascript" src="/static/app.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="debug">
+        <div>
+            Statistics:
+            <button type="button" class="btn" onclick="app.view.statistics.updateModel([{ 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }]);">.updateModel("few")</button>
+            <button type="button" class="btn" onclick="app.view.statistics.updateModel([]);">.updateModel("empty")</button>
+            <button type="button" class="btn" onclick="app.view.statistics.updateModel();">.updateModel("empty full")</button>
+            <button type="button" class="btn" onclick="app.view.statistics.updateModel([ { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' } ]);">.updateModel("assful")</button>
+        </div>
+
+        <div>
+            Nickname:
+            <button type="button" class="btn" onclick="app.router.main.nickname();">.goto("nickname")</button>
+        </div>
+
+        <div>
+            Error:
+            <button type="button" class="btn" onclick="app.view.error.init();">.init("empty full")</button>
+            <button type="button" class="btn" onclick="app.view.error.init([]);">.init("empty")</button>
+            <button type="button" class="btn" onclick="app.view.error.init(['Please enter your first name.']);">.init("one")</button>
+            <button type="button" class="btn" onclick="app.view.error.init(['Please enter your email address.','Your passwords do not match.']);">.init("empty")</button>
+        </div>
+
+        <div>
+            Games:
+            <button type="button" class="btn" onclick="app.router.main.games();">.goto("games")</button>
+            <button type="button" class="btn" onclick="app.view.games.updateModel([ { 'id': '0', title: 'Lucie, 15x15, 4, black' }, { 'id': '1', title: 'Jacob, 4x4, 3, white' }, { 'id': '2', title: 'Cody, 6x6, 4, white' }, { 'id': '3', title: 'Stanley, 3x3, 3, black' } ]);">.updateModel("few")</button>
+            <button type="button" class="btn" onclick="app.view.games.updateModel([]);">.updateModel("empty")</button>
+            <button type="button" class="btn" onclick="app.view.games.updateModel();">.updateModel("empty full")</button>
+            <button type="button" class="btn" onclick="app.view.games.updateModel([ { 'id': '0', title: 'Lucie, 15x15, 4, black' }, { 'id': '1', title: 'Jacob, 4x4, 3, white' }, { 'id': '2', title: 'Cody, 6x6, 4, white' }, { 'id': '3', title: 'Stanley, 3x3, 3, black' }, { 'id': '4', title: 'Lucie, 15x15, 4, black' }, { 'id': '5', title: 'Jacob, 4x4, 3, white' }, { 'id': '6', title: 'Cody, 6x6, 4, white' }, { 'id': '7', title: 'Stanley, 3x3, 3, black' }, { 'id': '8', title: 'Lucie, 15x15, 4, black' }, { 'id': '9', title: 'Jacob, 4x4, 3, white' }, { 'id': '10', title: 'Cody, 6x6, 4, white' }, { 'id': '11', title: 'Stanley, 3x3, 3, black' } ]);">.updateModel("assful")</button>
+        </div>
+
+        <div>
+            Details:
+            <button type="button" class="btn" onclick="app.router.main.details();">.goto("details")</button>
+        </div>
+
+        <div>
+            Game:
+            <button type="button" class="btn" onclick="app.router.main.game();">.goto("game")</button>
+        </div>
+
+        <div>
+            End:
+            <button type="button" class="btn" onclick="app.router.main.end();">.goto("end")</button>
+        </div>
+    </div>
+
+
 </body>
 </html>

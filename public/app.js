@@ -7,10 +7,47 @@ $(function(){
 window.app = {
     el: $("#app"),
     view: {},
+    router: {},
+    currentView: null,
+
     init: function() {
         app.view.statistics.init();
-        app.view.statistics.render();
-        app.view.nickname.render();
+        this.router.main.init();
+    },
+
+    goto: function(view, model) {
+        if ((this.currentView != null) && (this.currentView.empty != "undefined")) {
+            app.view[this.currentView].empty();
+            app.view.error.empty();
+        }
+
+        this.currentView = view;
+        app.view[view].init(model);
+    }
+};
+
+
+/**
+ * Router нашего приложения.
+ */
+app.router.main = {
+    init: function() {
+        this.nickname();
+    },
+    nickname: function(model) {
+        app.goto("nickname", model);
+    },
+    games: function(model) {
+        app.goto("games", model);
+    },
+    details: function(model) {
+        app.goto("details", model);
+    },
+    game: function(model) {
+        app.goto("game", model);
+    },
+    end: function(model) {
+        app.goto("end", model);
     }
 };
 
@@ -24,41 +61,21 @@ app.view.statistics = {
         "main": $("#tpl-statistics").html(),
         "list": $("#tpl-statistics-data").html()
     },
-    model: {
-        "data": {
-            loop: [
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" }
-            ]
-        }
-    },
-    model2: {
-        "data": []
-    },
-    model3: {
-        "data": {
-            loop: [
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" },
-                { "name": "Lucie", quantity: "5", wins: "4", losses: "1", ties: "0" },
-                { "name": "Stanley", quantity: "5", wins: "1", losses: "4", ties: "0" }
-            ]
-        }
-    },
+    model: [],
 
-    init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+    init: function(model) {
+        this.model = model || this.model;
+        this.render();
+
+        if (model != undefined) {
+            this.updateModel(model);
+        } else {
+            //socket.emit('запрос на статистику', "empty string");
+        }
+
+//        socket.on('свежая статистика', function (model) {
+//            this.updateModel(model);
+//        });
     },
 
     events: function() {
@@ -89,7 +106,26 @@ app.view.statistics = {
     },
 
     renderList: function() {
-        $('#statistics-data').html(Mustache.render(this.templates["list"], this.model3));
+        var context;
+
+        if (this.model.length) {
+            context = {
+                "data": {
+                    loop: this.model
+                }
+            };
+        } else {
+            context = {
+                "data": this.model
+            };
+        }
+
+        $('#statistics-data').html(Mustache.render(this.templates["list"], context));
+    },
+
+    updateModel: function(model) {
+        this.model = model || this.model;
+        this.renderList();
     },
 
     empty: function() {
@@ -104,13 +140,18 @@ app.view.statistics = {
 app.view.error = {
     el: $("#error"),
     template: $("#tpl-error").html(),
-    model: {},
+    model: [],
 
-    init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+    init: function(model) {
+        this.model = model || this.model;
+        this.render();
+        // а можно было слушать отдельный канал для error
     },
 
     render: function() {
+        if (!this.model.length) {
+            return;
+        }
         $(this.el).html(Mustache.render(this.template, this.model));
     },
 
@@ -126,10 +167,13 @@ app.view.error = {
 app.view.nickname = {
     el: $("#nickname"),
     template: $("#tpl-nickname").html(),
-    model: {},
 
     init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+        this.render();
+
+//        socket.on('результат попытки регистрации', function (data) {
+//            // code: рисую error или перехожу на след. этап
+//        });
     },
 
     events: function() {
@@ -137,13 +181,14 @@ app.view.nickname = {
 
         $("#nickname-username").keyup(function(e) {
             if(e.keyCode == 13) {
+                // socket.emit('попытка регистрации', { name: 'Igor' });
                 console.log(self.serialize());
             }
         });
     },
 
     render: function() {
-        $(this.el).html(Mustache.render(this.template, this.model));
+        $(this.el).html(Mustache.render(this.template, {}));
         this.events();
     },
 
@@ -169,46 +214,32 @@ app.view.games = {
         "main": $("#tpl-games").html(),
         "list": $("#tpl-games-choose-container").html()
     },
-    model: {
-        "data": {
-            loop: [
-                { "id": "0", title: "Lucie, 15x15, 4, black" },
-                { "id": "1", title: "Jacob, 4x4, 3, white" },
-                { "id": "2", title: "Cody, 6x6, 4, white" },
-                { "id": "3", title: "Stanley, 3x3, 3, black" }
-            ]
-        }
-    },
-    model2: {
-        "data": []
-    },
-    model3: {
-        "data": {
-            loop: [
-                { "id": "0", title: "Lucie, 15x15, 4, black" },
-                { "id": "1", title: "Jacob, 4x4, 3, white" },
-                { "id": "2", title: "Cody, 6x6, 4, white" },
-                { "id": "3", title: "Stanley, 3x3, 3, black" },
-                { "id": "4", title: "Lucie, 15x15, 4, black" },
-                { "id": "5", title: "Jacob, 4x4, 3, white" },
-                { "id": "6", title: "Cody, 6x6, 4, white" },
-                { "id": "7", title: "Stanley, 3x3, 3, black" },
-                { "id": "8", title: "Lucie, 15x15, 4, black" },
-                { "id": "9", title: "Jacob, 4x4, 3, white" },
-                { "id": "10", title: "Cody, 6x6, 4, white" },
-                { "id": "11", title: "Stanley, 3x3, 3, black" }
-            ]
-        }
-    },
+    model: [],
 
-    init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+    init: function(model) {
+        this.model = model || this.model;
+        this.render();
+
+        if (model != undefined) {
+            this.updateModel(model);
+        } else {
+            //socket.emit('запрос на ожидающие игрока игры', "empty string");
+        }
+
+//        socket.on('свежий список игр ожидающих игрока', function (model) {
+//            this.updateModel(model);
+//        });
+
+//        socket.on('результат попытки подключения к игре', function (data) {
+//            // code: рисую error или перехожу на след. этап
+//        });
     },
 
     events: function() {
         var self = this;
 
         $('#games-connect').click(function() {
+            // socket.emit('попытка подключится к игре', { gameID: '43', userID: "27 aka Igor" });
             console.log(self.serialize());
         });
     },
@@ -220,7 +251,21 @@ app.view.games = {
     },
 
     renderList: function() {
-        $('#games-choose-container').html(Mustache.render(this.templates["list"], this.model));
+        var context;
+
+        if (this.model.length) {
+            context = {
+                "data": {
+                    loop: this.model
+                }
+            };
+        } else {
+            context = {
+                "data": this.model
+            };
+        }
+
+        $('#games-choose-container').html(Mustache.render(this.templates["list"], context));
     },
 
     serialize: function() {
@@ -228,6 +273,11 @@ app.view.games = {
         return {
             "id": gameID
         };
+    },
+
+    updateModel: function(model) {
+        this.model = model || this.model;
+        this.renderList();
     },
 
     empty: function() {
@@ -242,22 +292,26 @@ app.view.games = {
 app.view.details = {
     el: $("#details"),
     template: $("#tpl-details").html(),
-    model: {},
 
     init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+        this.render();
+
+//        socket.on('результат попытки создать новую игру', function (data) {
+//            // code: рисую error или перехожу на след. этап
+//        });
     },
 
     events: function() {
         var self = this;
 
         $('#details-create').click(function() {
+            // socket.emit('попытка создать новую игру', { userID: '27 aka Igor' });
             console.log(self.serialize());
         });
     },
 
     render: function() {
-        $(this.el).html(Mustache.render(this.template, this.model));
+        $(this.el).html(Mustache.render(this.template, {}));
         this.events();
     },
 
@@ -291,7 +345,30 @@ app.view.game = {
     ],
 
     init: function() {
-        // TODO: Слушать WebSocket и реагировать?
+
+
+
+//// Запросить данные об игре.
+//        socket.emit('запрос на данные об игре', { hz: 'hz' });
+//
+//// Подписка на будущие изменения в статусе игры.
+//        socket.on('данные об игре', function (data) {
+//            // code: на основании этих данных я рисую поле и прочую хуйню
+//        });
+//
+//// Запрос на проверку корректности хода.
+//        socket.emit('попытка походить', { name: 'Igor' });
+//
+//// Подписка на успешную\неуспешную попытку хода.
+//        socket.on('результат попытки походить', function (data) {
+//            // code: рисую error или делаю ход (отрисовую ход)
+//        });
+//
+//// Подписка на интересные факты (вход второго игрока, конец, чей ход) об игре. Статус игры.
+//        socket.on('статус игры', function (data) {
+//            // code: рисую сообщение (как error)
+//        });
+
     },
 
     render: function() {
