@@ -392,6 +392,12 @@ app.view.game = {
             var item = this.model[i];
             this.renderCell(item);
         }
+        var width = $("#game-field").width();
+        var size = Math.floor(width/quantity);
+        $('[data-coordinates]').css({
+            "width": size,
+            "height": size
+        });
     },
 
     // @data: {"x":"2", "y":"2", "type":"white"}
