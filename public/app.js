@@ -379,6 +379,17 @@ app.view.game = {
 
     },
 
+    events: function() {
+        var self = this;
+
+        var resizeTimerID;
+        $(window).resize(function() {
+            console.log("resize");
+            clearTimeout(resizeTimerID);
+            resizeTimerID = setTimeout(self.setCellSize, 100);
+        });
+    },
+
     render: function() {
         var quantity = 5; // Размер поля. Будет приходить извне.
 
@@ -398,7 +409,12 @@ app.view.game = {
             this.renderCell(item);
         }
 
-        // Динамическая ширина и высота ячейки
+        this.setCellSize();
+        this.events();
+    },
+
+    setCellSize: function() {
+        var quantity = 5; // Размер поля. Будет приходить извне.
         var width = $("#game-field").width();
         var size = Math.floor(width/quantity);
         $('[data-coordinates]').css({
