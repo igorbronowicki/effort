@@ -342,11 +342,14 @@ app.view.details = {
 app.view.game = {
     el: $("#game"),
     template: $("#tpl-game").html(),
-    model: [
-        {"x":"2", "y":"2", "type":"white"},
-        {"x":"1", "y":"1", "type":"black"},
-        {"x":"4", "y":"1", "type":"white"}
-    ],
+    model: {
+        quantity: 5,
+        cells: [
+            {"x":"2", "y":"2", "type":"white"},
+            {"x":"1", "y":"1", "type":"black"},
+            {"x":"4", "y":"1", "type":"white"}
+        ]
+    },
 
     init: function() {
         this.render();
@@ -376,7 +379,6 @@ app.view.game = {
 
         var resizeTimerID;
         $(window).resize(function() {
-            console.log("resize");
             clearTimeout(resizeTimerID);
             resizeTimerID = setTimeout(self.setCellSize, 100);
         });
@@ -388,12 +390,10 @@ app.view.game = {
     },
 
     render: function() {
-        var quantity = 5; // Размер поля. Будет приходить извне.
-
         // Создание вспомогательного массива координат
         var cells = [];
-        for(var y=1; y<=quantity; y++) {
-            for(var x=1; x<=quantity; x++) {
+        for(var y=1; y<=this.model.quantity; y++) {
+            for(var x=1; x<=this.model.quantity; x++) {
                 cells.push(x+":"+y);
             }
         }
@@ -401,9 +401,9 @@ app.view.game = {
         $(this.el).html(Mustache.render(this.template, cells));
 
         // Отрисовка каждой ячейки
-        for(var i=0; i<this.model.length; i++) {
-            var item = this.model[i];
-            this.renderCell(item);
+        for(var i=0; i<this.model.cells.length; i++) {
+            var cell = this.model.cells[i];
+            this.renderCell(cell);
         }
 
         this.setCellSize();
@@ -411,18 +411,17 @@ app.view.game = {
     },
 
     setCellSize: function() {
-        var quantity = 5; // Размер поля. Будет приходить извне.
         var width = $("#game-field").width();
-        var size = Math.floor(width/quantity);
+        var size = Math.floor(width/this.model.quantity);
         $('[data-coordinates]').css({
             "width": size,
             "height": size
         });
     },
 
-    // @data: {"x":"2", "y":"2", "type":"white"}
-    renderCell: function(data) {
-        $('[data-coordinates="'+ data.x + ":" + data.y +'"]').addClass(data.type);
+    // @cell: {"x":"2", "y":"2", "type":"white"}
+    renderCell: function(cell) {
+        $('[data-coordinates="'+ cell.x + ":" + cell.y +'"]').addClass(cell.type);
     },
 
     serialize: function(elem) {
