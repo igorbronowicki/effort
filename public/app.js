@@ -388,6 +388,11 @@ app.view.game = {
             clearTimeout(resizeTimerID);
             resizeTimerID = setTimeout(self.setCellSize, 100);
         });
+
+        $('[data-coordinates]:not([class])').click(function() {
+            var coordinates = $(this).attr("data-coordinates").split(":");
+            console.log(coordinates);
+        });
     },
 
     render: function() {
