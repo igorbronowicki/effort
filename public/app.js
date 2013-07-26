@@ -351,31 +351,23 @@ app.view.game = {
     init: function() {
         this.render();
 
+        // //        app.socket.emit('запрос на данные об игре', { hz: 'hz' });
 
 
-        /* =========== Этот кусок (закомментированного) кода здесь просто-так. ====================================================== */
-        /* =========== В отличие от всего остального, его еще предстоит распихать по своим местам. ============ */
-
-//// Запросить данные об игре.
-//        app.socket.emit('запрос на данные об игре', { hz: 'hz' });
-//
-//// Подписка на будущие изменения в статусе игры.
-//        app.socket.on('данные об игре', function (data) {
-//            // code: на основании этих данных я рисую поле и прочую хуйню
-//        });
-//
-//// Запрос на проверку корректности хода.
-//        app.socket.emit('попытка походить', { name: 'Igor' });
-//
-//// Подписка на успешную\неуспешную попытку хода.
-//        app.socket.on('результат попытки походить', function (data) {
-//            // code: рисую error или делаю ход (отрисовую ход)
-//        });
-//
-//// Подписка на интересные факты (вход второго игрока, конец, чей ход) об игре. Статус игры.
-//        app.socket.on('статус игры', function (data) {
-//            // code: рисую сообщение (как error)
-//        });
+        //// Подписка на будущие изменения в статусе игры.
+        //        app.socket.on('данные об игре', function (data) {
+        //            // code: на основании этих данных я рисую поле и прочую хуйню
+        //        });
+        //
+        //// Подписка на успешную\неуспешную попытку хода.
+        //        app.socket.on('результат попытки походить', function (data) {
+        //            // code: рисую error или делаю ход (отрисовую ход)
+        //        });
+        //
+        //// Подписка на интересные факты (вход второго игрока, конец, чей ход) об игре. Статус игры.
+        //        app.socket.on('статус игры', function (data) {
+        //            // code: рисую сообщение (как error)
+        //        });
 
     },
 
@@ -390,8 +382,8 @@ app.view.game = {
         });
 
         $('[data-coordinates]:not([class])').click(function() {
-            var coordinates = $(this).attr("data-coordinates").split(":");
-            console.log(coordinates);
+            // app.socket.emit('попытка походить', { name: 'Igor' });
+            console.log(self.serialize(this));
         });
     },
 
@@ -431,6 +423,14 @@ app.view.game = {
     // @data: {"x":"2", "y":"2", "type":"white"}
     renderCell: function(data) {
         $('[data-coordinates="'+ data.x + ":" + data.y +'"]').addClass(data.type);
+    },
+
+    serialize: function(elem) {
+        var coordinates = $(elem).attr("data-coordinates").split(":");
+        return {
+            "x": coordinates[0],
+            "y": coordinates[1]
+        };
     },
 
     empty: function() {
