@@ -381,17 +381,24 @@ app.view.game = {
 
     render: function() {
         var quantity = 5; // Размер поля. Будет приходить извне.
+
+        // Создание вспомогательного массива координат
         var cells = [];
-        for(var i=1; i<=quantity; i++) {
-            for(var j=1; j<=quantity; j++) {
-                cells.push(i+":"+j);
+        for(var y=1; y<=quantity; y++) {
+            for(var x=1; x<=quantity; x++) {
+                cells.push(x+":"+y);
             }
         }
+
         $(this.el).html(Mustache.render(this.template, cells));
+
+        // Отрисовка каждой ячейки
         for(var i=0; i<this.model.length; i++) {
             var item = this.model[i];
             this.renderCell(item);
         }
+
+        // Динамическая ширина и высота ячейки
         var width = $("#game-field").width();
         var size = Math.floor(width/quantity);
         $('[data-coordinates]').css({
