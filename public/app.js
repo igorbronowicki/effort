@@ -49,9 +49,6 @@ app.router.main = {
     },
     game: function(model) {
         app.goto("game", model);
-    },
-    end: function(model) {
-        app.goto("end", model);
     }
 };
 
@@ -437,28 +434,6 @@ app.view.game = {
             "x": coordinates[0],
             "y": coordinates[1]
         };
-    },
-
-    empty: function() {
-        $(this.el).empty();
-    }
-};
-
-
-/**
- * View для отрисовки экрана окончания игры.
- */
-app.view.end = {
-    el: $("#end"),
-    template: $("#tpl-end").html(),
-    model: {},
-
-    init: function() {
-        this.render();
-    },
-
-    render: function() {
-        $(this.el).html(Mustache.render(this.template, this.model));
     },
 
     empty: function() {
