@@ -309,6 +309,12 @@ app.view.details = {
             // app.socket.emit('попытка создать новую игру', { userID: '27 aka Igor' });
             console.log(self.serialize());
         });
+
+        $("#details-dimensions, #details-lineup").keyup(function(e) {
+            if(e.keyCode == 13) {
+                $("#details-create").click();
+            }
+        });
     },
 
     render: function() {
