@@ -343,7 +343,7 @@ app.view.game = {
     el: $("#game"),
     template: $("#tpl-game").html(),
     model: {
-        quantity: 5,
+        quantity: 20,
         cells: [
             {"x":"2", "y":"2", "type":"white"},
             {"x":"1", "y":"1", "type":"black"},
@@ -413,8 +413,9 @@ app.view.game = {
     setCellSize: function() {
         var self = app.view.game; // dirty hack :(
 
-        var width = $("#game-field").width();
+        var width = $("#game-field").closest(".page").width();
         var size = Math.floor(width/self.model.quantity);
+        $("#game-field").width(size*self.model.quantity);
         $('[data-coordinates]').css({
             "width": size,
             "height": size
