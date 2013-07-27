@@ -190,6 +190,7 @@ app.view.nickname = {
 
     render: function() {
         $(this.el).html(Mustache.render(this.template, {}));
+        $("#nickname-username").focus();
         this.events();
     },
 
