@@ -200,6 +200,7 @@
         <div>
             Game:
             <button type="button" class="btn" onclick="app.router.main.game({ quantity: 20, cells: [ {'x':'2', 'y':'2', 'type':'white'}, {'x':'1', 'y':'1', 'type':'black'}, {'x':'4', 'y':'1', 'type':'white'} ] });">.goto("game", model)</button>
+            <button type="button" class="btn" onclick="app.view.game.renderNote('Вы проиграли! :(');">.renderNote("...")</button>
         </div>
     </div>
 
