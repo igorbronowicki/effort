@@ -172,10 +172,7 @@
     <div id="debug">
         <div>
             Statistics:
-            <button type="button" class="btn" onclick="app.view.statistics.updateModel([{ 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }]);">.updateModel("few")</button>
-            <button type="button" class="btn" onclick="app.view.statistics.updateModel([]);">.updateModel("empty")</button>
-            <button type="button" class="btn" onclick="app.view.statistics.updateModel();">.updateModel("empty full")</button>
-            <button type="button" class="btn" onclick="app.view.statistics.updateModel([ { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }, { 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' } ]);">.updateModel("assful")</button>
+            <button type="button" class="btn" onclick="app.view.statistics.updateModel([{ 'name': 'Lucie', quantity: '5', wins: '4', losses: '1', ties: '0' }, { 'name': 'Stanley', quantity: '5', wins: '1', losses: '4', ties: '0' }]);">.updateModel(model)</button>
         </div>
 
         <div>
@@ -185,19 +182,14 @@
 
         <div>
             Error:
-            <button type="button" class="btn" onclick="app.view.error.init();">.init("empty full")</button>
-            <button type="button" class="btn" onclick="app.view.error.init([]);">.init("empty")</button>
-            <button type="button" class="btn" onclick="app.view.error.init(['Please enter your first name.']);">.init("one")</button>
-            <button type="button" class="btn" onclick="app.view.error.init(['Please enter your email address.','Your passwords do not match.']);">.init("empty")</button>
+            <button type="button" class="btn" onclick="app.view.error.init(['Please enter your email address.','Your passwords do not match.']);">.init(model)</button>
+            <button type="button" class="btn" onclick="app.view.error.empty();">.empty()</button>
         </div>
 
         <div>
             Games:
             <button type="button" class="btn" onclick="app.router.main.games();">.goto("games")</button>
-            <button type="button" class="btn" onclick="app.view.games.updateModel([ { 'id': '0', title: 'Lucie, 15x15, 4, black' }, { 'id': '1', title: 'Jacob, 4x4, 3, white' }, { 'id': '2', title: 'Cody, 6x6, 4, white' }, { 'id': '3', title: 'Stanley, 3x3, 3, black' } ]);">.updateModel("few")</button>
-            <button type="button" class="btn" onclick="app.view.games.updateModel([]);">.updateModel("empty")</button>
-            <button type="button" class="btn" onclick="app.view.games.updateModel();">.updateModel("empty full")</button>
-            <button type="button" class="btn" onclick="app.view.games.updateModel([ { 'id': '0', title: 'Lucie, 15x15, 4, black' }, { 'id': '1', title: 'Jacob, 4x4, 3, white' }, { 'id': '2', title: 'Cody, 6x6, 4, white' }, { 'id': '3', title: 'Stanley, 3x3, 3, black' }, { 'id': '4', title: 'Lucie, 15x15, 4, black' }, { 'id': '5', title: 'Jacob, 4x4, 3, white' }, { 'id': '6', title: 'Cody, 6x6, 4, white' }, { 'id': '7', title: 'Stanley, 3x3, 3, black' }, { 'id': '8', title: 'Lucie, 15x15, 4, black' }, { 'id': '9', title: 'Jacob, 4x4, 3, white' }, { 'id': '10', title: 'Cody, 6x6, 4, white' }, { 'id': '11', title: 'Stanley, 3x3, 3, black' } ]);">.updateModel("assful")</button>
+            <button type="button" class="btn" onclick="app.router.main.games([ { 'id': '0', title: 'Lucie, 15x15, 4, black' }, { 'id': '1', title: 'Jacob, 4x4, 3, white' }, { 'id': '2', title: 'Cody, 6x6, 4, white' }, { 'id': '3', title: 'Stanley, 3x3, 3, black' } ]);">.goto("games", model)</button>
         </div>
 
         <div>
@@ -207,12 +199,7 @@
 
         <div>
             Game:
-            <button type="button" class="btn" onclick="app.router.main.game();">.goto("game")</button>
-        </div>
-
-        <div>
-            End:
-            <button type="button" class="btn" onclick="app.router.main.end();">.goto("end")</button>
+            <button type="button" class="btn" onclick="app.router.main.game({ quantity: 20, cells: [ {'x':'2', 'y':'2', 'type':'white'}, {'x':'1', 'y':'1', 'type':'black'}, {'x':'4', 'y':'1', 'type':'white'} ] });">.goto("game", model)</button>
         </div>
     </div>
 

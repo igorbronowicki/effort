@@ -38,14 +38,14 @@ app.router.main = {
     init: function() {
         this.nickname();
     },
-    nickname: function(model) {
-        app.goto("nickname", model);
+    nickname: function() {
+        app.goto("nickname");
     },
     games: function(model) {
         app.goto("games", model);
     },
-    details: function(model) {
-        app.goto("details", model);
+    details: function() {
+        app.goto("details");
     },
     game: function(model) {
         app.goto("game", model);
@@ -339,16 +339,10 @@ app.view.details = {
 app.view.game = {
     el: $("#game"),
     template: $("#tpl-game").html(),
-    model: {
-        quantity: 20,
-        cells: [
-            {"x":"2", "y":"2", "type":"white"},
-            {"x":"1", "y":"1", "type":"black"},
-            {"x":"4", "y":"1", "type":"white"}
-        ]
-    },
+    model: {},
 
-    init: function() {
+    init: function(model) {
+        this.model = model || this.model;
         this.render();
 
         // //        app.socket.emit('запрос на данные об игре', { hz: 'hz' });
