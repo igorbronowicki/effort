@@ -411,8 +411,10 @@ app.view.game = {
     },
 
     setCellSize: function() {
+        var self = app.view.game; // dirty hack :(
+
         var width = $("#game-field").width();
-        var size = Math.floor(width/this.model.quantity);
+        var size = Math.floor(width/self.model.quantity);
         $('[data-coordinates]').css({
             "width": size,
             "height": size
