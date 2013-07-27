@@ -248,6 +248,7 @@ app.view.games = {
 
     render: function() {
         $(this.el).html(Mustache.render(this.templates["main"], {}));
+        $("#games-create").focus();
         this.renderList();
         this.events();
     },
@@ -320,6 +321,7 @@ app.view.details = {
 
     render: function() {
         $(this.el).html(Mustache.render(this.template, {}));
+        $("#details-type").focus();
         this.events();
     },
 
