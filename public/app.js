@@ -427,6 +427,10 @@ app.view.game = {
         $('[data-coordinates="'+ cell.x + ":" + cell.y +'"]').addClass(cell.type);
     },
 
+    renderNote: function(text) {
+        $('#game-note').html(text);
+    },
+
     serialize: function(elem) {
         var coordinates = $(elem).attr("data-coordinates").split(":");
         return {
