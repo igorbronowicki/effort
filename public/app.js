@@ -244,6 +244,10 @@ app.view.games = {
             // app.socket.emit('попытка подключится к игре', { gameID: '43', userID: "27 aka Igor" });
             console.log(self.serialize());
         });
+
+        $('#games-create').click(function() {
+            app.router.main.details();
+        });
     },
 
     render: function() {
