@@ -218,11 +218,11 @@ app.view.games = {
     },
     model: [],
 
-    init: function(model) {
+    init: function(model) { // bootstrapping ?
         this.model = model || this.model;
         this.render();
 
-        if (model != undefined) {
+        if (model != undefined) { // Это можно как-то переписать? model.length
             this.updateModel(model);
         } else {
             //app.socket.emit('запрос на ожидающие игрока игры', "empty string");
@@ -354,6 +354,9 @@ app.view.game = {
         this.model = model || this.model;
         this.render();
 
+        // TODO: Disable/Enable UI
+
+
         // //        app.socket.emit('запрос на данные об игре', { hz: 'hz' });
 
 
@@ -370,6 +373,8 @@ app.view.game = {
         //// Подписка на интересные факты (вход второго игрока, конец, чей ход) об игре. Статус игры.
         //        app.socket.on('статус игры', function (data) {
         //            // code: рисую сообщение (как error)
+        //            // если игра окончена, снять обработчик с Click
+        //            // jQuery 2.0 API .on VS .click
         //        });
 
     },
