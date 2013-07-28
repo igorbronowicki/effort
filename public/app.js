@@ -165,13 +165,14 @@ app.view.error = {
 /**
  * View для отрисовки экрана ввода имени.
  */
-app.view.nickname = {
+app.view.nickname = { // Отдельные JavaScript файлы. Require.js :)
     el: $("#nickname"),
     template: $("#tpl-nickname").html(),
 
     init: function() {
         this.render();
 
+        // init VS afterClick
 //        app.socket.on('результат попытки регистрации', function (data) {
 //            // code: рисую error или перехожу на след. этап
 //        });
