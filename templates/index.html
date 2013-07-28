@@ -198,8 +198,11 @@
 
         <div>
             Game:
+            <script type="text/javascript">
+                var __text = 'Вы проиграли! :( <a href="#" onclick="app.router.main.games(); return false;">Try again!</a>';
+            </script>
             <button type="button" class="btn" onclick="app.router.main.game({ quantity: 20, cells: [ {'x':'2', 'y':'2', 'type':'white'}, {'x':'1', 'y':'1', 'type':'black'}, {'x':'4', 'y':'1', 'type':'white'} ] });">.goto("game", model)</button>
-            <button type="button" class="btn" onclick="app.view.game.renderNote('Вы проиграли! :(');">.renderNote("...")</button>
+            <button type="button" class="btn" onclick="app.view.game.renderNote(__text);">.renderNote("...")</button>
         </div>
     </div>
 
