@@ -262,6 +262,7 @@ app.view.games = {
         var context;
 
         if (this.model.length) {
+            // this.model[0].first = true; VS context
             context = {
                 "data": {
                     loop: this.model
@@ -390,7 +391,7 @@ app.view.game = {
         var resizeTimerID;
         $(window).resize(function() {
             clearTimeout(resizeTimerID);
-            resizeTimerID = setTimeout(self.setCellSize, 100);
+            resizeTimerID = setTimeout(self.setCellSize, 100);  // $.proxy(self.setCellSize, this) VS function() {self.setCellSize();}
         });
 
         $('[data-coordinates]:not([class])').click(function() {

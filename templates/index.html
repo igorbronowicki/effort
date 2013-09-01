@@ -18,7 +18,7 @@
         <div id="statistics">
             <!-- This area will be filled by JavaScript -->
         </div>
-        <div id="pages">
+        <div id="pages"> <!-- Это уже можно удалить? -->
             <div id="error">
                 <!-- This area will be filled by JavaScript -->
             </div>
@@ -109,11 +109,12 @@
         <select id="games-choose" size="8">
             {{#loop}}
             <option value="{{id}}">{{title}}</option>
+            <!-- <option value="{{game_id}}"{{#first}} selected="selected"{{/first}}>{{title}}</option> -->
             {{/loop}}
         </select>
         {{/data}}
         {{^data}}
-        <select id="games-choose" size="8" disabled>
+        <select id="games-choose" size="8" disabled> <!-- я мог disabled сделать по другому? как first -->
             <option value="">No games :(</option>
         </select>
         {{/data}}
